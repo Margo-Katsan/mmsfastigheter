@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ChevronRight, House } from "lucide-react";
@@ -13,11 +13,12 @@ import type {
   PropertySearchParams,
 } from "@/types/property";
 
-export const metadata: Metadata = {
-  title: "Våra fastigheter",
+export const metadata = createMetadata({
+  title: "Fastigheter till salu och uthyrning i Skåne",
   description:
-    "Utforska MMS Fastigheters aktuella fastigheter till salu och uthyrning i Skåne. Hitta rätt fastighet för dina behov.",
-};
+    "Utforska våra aktuella fastigheter till salu och uthyrning i Landskrona, Ängelholm och Skurup.",
+  path: "/fastigheter",
+});
 
 type PropertiesPageProps = {
   searchParams: Promise<PropertySearchParams>;

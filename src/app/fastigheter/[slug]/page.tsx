@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 
 import { PropertyDetails } from "@/components/properties/PropertyDetails";
@@ -6,6 +6,7 @@ import { RelatedProperties } from "@/components/properties/RelatedProperties";
 
 import { availableProperties } from "@/data/properties";
 import { getPropertyBySlug } from "@/lib/property-utils";
+import { Metadata } from "next";
 
 type PropertyPageProps = {
   params: Promise<{
@@ -30,30 +31,12 @@ export async function generateMetadata({
     notFound();
   }
 
-  const title = `${property.title} – ${property.location}`;
-
-  return {
-    title,
+  return createMetadata({
+    title: `${property.title} – ${property.location}`,
     description: property.description,
-
-    openGraph: {
-      title,
-      description: property.description,
-      type: "website",
-      locale: "sv_SE",
-
-      ...(property.image
-        ? {
-            images: [
-              {
-                url: property.image,
-                alt: title,
-              },
-            ],
-          }
-        : {}),
-    },
-  };
+    path: property.href,
+    image: property.image,
+  });
 }
 
 export default async function PropertyPage({

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createMetadata } from "@/lib/seo";
 
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -7,11 +7,12 @@ import { ContactCTA } from "@/components/sections/ContactCTA";
 
 import { developmentProjects } from "@/data/properties";
 
-export const metadata: Metadata = {
-  title: "Våra projekt",
+export const metadata = createMetadata({
+  title: "Våra projekt och fastighetsutveckling",
   description:
-    "Upptäck MMS Fastigheters bostadsprojekt och utvecklingsmöjligheter i Skåne.",
-};
+    "Upptäck MMS Fastigheters bostadsprojekt och utvecklingsmöjligheter i Skåne, inklusive Bong 1 och Borrby i Ystad.",
+  path: "/projekt",
+});
 
 export default function ProjectsPage() {
   return (

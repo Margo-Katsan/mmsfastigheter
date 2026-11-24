@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { siteConfig } from "@/config/site";
 
 import "./globals.css";
 
@@ -19,17 +20,54 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    "https://mmsfastigheter.se"
-  ),
+  metadataBase: new URL(siteConfig.url),
 
   title: {
-    default: "MMS Fastigheter",
-    template: "%s | MMS Fastigheter",
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
   },
 
-  description:
-    "Fastigheter, uthyrning och fastighetsutveckling i Skåne sedan 1984.",
+  description: siteConfig.description,
+
+  applicationName: siteConfig.name,
+
+  authors: [
+    {
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+  ],
+
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+
+  robots: {
+    index: siteConfig.indexable,
+    follow: siteConfig.indexable,
+  },
+
+  openGraph: {
+    type: "website",
+    locale: siteConfig.locale,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        alt: siteConfig.name,
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+  },
 };
 
 export default function RootLayout({

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 
 import { Container } from "@/components/ui/Container";
@@ -7,11 +7,12 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { ContactInformation } from "@/components/contact/ContactInformation";
 import { ContactFormSection } from "@/components/contact/ContactFormSection";
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Kontakt",
   description:
-    "Kontakta MMS Fastigheter för frågor om våra fastigheter, uthyrning och utvecklingsprojekt i Skåne.",
-};
+    "Kontakta MMS Fastigheter för frågor om fastigheter, uthyrning, försäljning och utvecklingsprojekt i Skåne.",
+  path: "/kontakt",
+});
 
 type ContactPageProps = {
   searchParams: Promise<{

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createMetadata } from "@/lib/seo";
 import { ShieldCheck } from "lucide-react";
 
 import { Container } from "@/components/ui/Container";
@@ -7,11 +7,12 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PrivacyContent } from "@/components/legal/PrivacyContent";
 import { PrivacyNavigation } from "@/components/legal/PrivacyNavigation";
 
-export const metadata: Metadata = {
+export const metadata = createMetadata({
   title: "Integritetspolicy",
   description:
     "Information om hur MMS Fastigheter behandlar personuppgifter och skyddar din integritet.",
-};
+  path: "/integritetspolicy",
+});
 
 export default function PrivacyPolicyPage() {
   return (

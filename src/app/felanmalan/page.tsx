@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createMetadata } from "@/lib/seo";
 
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -7,11 +7,12 @@ import { FaultReportForm } from "@/components/fault-report/FaultReportForm";
 
 import { FaultReportInformation } from "@/components/fault-report/FaultReportInformation";
 
-export const metadata: Metadata = {
-  title: "Felanmälan",
+export const metadata = createMetadata({
+  title: "Felanmälan för hyresgäster",
   description:
     "Gör en felanmälan för din bostad eller lokal hos MMS Fastigheter. Beskriv problemet och bifoga bilder.",
-};
+  path: "/felanmalan",
+});
 
 export default function FaultReportPage() {
   return (

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { createMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 
 import { ProjectDetails } from "@/components/projects/ProjectDetails";
@@ -30,30 +31,12 @@ export async function generateMetadata({
     notFound();
   }
 
-  const title = `${project.title} – ${project.location}`;
-
-  return {
-    title,
+  return createMetadata({
+    title: `${project.title} – Bostadsprojekt i ${project.location}`,
     description: project.description,
-
-    openGraph: {
-      title,
-      description: project.description,
-      type: "website",
-      locale: "sv_SE",
-
-      ...(project.image
-        ? {
-            images: [
-              {
-                url: project.image,
-                alt: title,
-              },
-            ],
-          }
-        : {}),
-    },
-  };
+    path: project.href,
+    image: project.image,
+  });
 }
 
 export default async function ProjectPage({
