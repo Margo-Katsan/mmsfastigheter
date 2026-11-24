@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/layout/Header";
 import { Inter, Playfair_Display } from "next/font/google";
+
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+
 import "./globals.css";
 
 const inter = Inter({
@@ -37,6 +40,8 @@ export default function RootLayout({
         <Header />
 
         {children}
+
+        <Footer />
       </body>
     </html>
   );
