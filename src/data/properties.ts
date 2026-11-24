@@ -2,33 +2,33 @@ import type { Property } from "@/types/property";
 
 export const properties: Property[] = [
   {
-    id: "bong-1-ystad",
-    title: "Bong 1",
-    location: "Ystad",
-    locationSlug: "ystad",
-    type: "residential",
-    status: "Projekt",
-    description:
-      "Ett stenkast från havet planerar vi för tre flerbostadshus med totalt 100 lägenheter.",
-    apartments: 100,
-    image: "/images/properties/bong-1-ystad.png",
-    href: "/projekt/bong-1-ystad",
-  },
-  {
-    id: "borrby-1-borrby-2-ystad",
-    title: "Borrby 1 & Borrby 2",
-    location: "Ystad",
-    locationSlug: "ystad",
-    type: "residential",
-    status: "Projekt",
-    description:
-      "Detaljplansändringen från industri till bostäder godkändes 2022 på det tidigare Regementsområdet i Ystad. Här finns möjlighet att utveckla ett 80-tal bostadslägenheter.",
-    apartments: 80,
-    image: "/images/properties/borrby-1-borrby-2-ystad.png",
-    contactText:
-      "Kontakta Erika Walgreen för mer information.",
-    href: "/projekt/borrby-1-borrby-2-ystad",
-  },
+  id: "bong-1-ystad",
+  title: "Bong 1",
+  location: "Ystad",
+  locationSlug: "ystad",
+  type: "residential",
+  status: "Projekt",
+  description:
+    "Ett stenkast från havet planerar vi för tre flerbostadshus med totalt 100 lägenheter.",
+  apartments: 100,
+  image: "/images/properties/bong-1-ystad.png",
+  href: "/projekt/bong-1-ystad",
+},
+{
+  id: "borrby-1-borrby-2-ystad",
+  title: "Borrby 1 & Borrby 2",
+  location: "Ystad",
+  locationSlug: "ystad",
+  type: "residential",
+  status: "Projekt",
+  description:
+    "Detaljplansändringen från industri till bostäder godkändes 2022 på det tidigare Regementsområdet i Ystad. Ärendet hade då överklagats till mark- och miljööverdomstolen 2021.\n\nMed Ystads sandskog som närmaste granne finns här möjlighet att utveckla ett 80-tal bostadslägenheter.",
+  apartments: 80,
+  image: "/images/properties/borrby-1-borrby-2-ystad.png",
+  contactText:
+    "Kontakta Erika Walgreen för mer information.",
+  href: "/projekt/borrby-1-borrby-2-ystad",
+},
   {
     id: "fastighet-angelholm",
     title: "Utvecklingsfastighet",
