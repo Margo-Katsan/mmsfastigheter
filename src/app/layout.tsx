@@ -19,10 +19,15 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    "https://mmsfastigheter.se"
+  ),
+
   title: {
     default: "MMS Fastigheter",
     template: "%s | MMS Fastigheter",
   },
+
   description:
     "Fastigheter, uthyrning och fastighetsutveckling i Skåne sedan 1984.",
 };

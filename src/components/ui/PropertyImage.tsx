@@ -28,16 +28,17 @@ export function PropertyImage({
 
   return (
     <Image
-      src={src}
-      alt={alt}
-      fill
-      sizes={sizes}
-      onError={() => setFailedSrc(src)}
-      className={
-        contain
-          ? "object-contain"
-          : "object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-105"
-      }
-    />
+  src={src}
+  alt={alt}
+  fill
+  quality={95}
+  sizes={sizes}
+  onError={() => setFailedSrc(src)}
+  className={
+    contain
+      ? "object-contain"
+      : "object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-105"
+  }
+/>
   );
 }

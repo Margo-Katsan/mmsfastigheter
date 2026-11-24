@@ -1,3 +1,4 @@
+import { availableProperties } from "@/data/properties";
 import {
   propertyLocations,
   propertyTypes,
@@ -149,4 +150,43 @@ export function filterProperties(
     default:
       return filtered;
   }
+}
+
+export function getPropertyBySlug(slug: string) {
+  return availableProperties.find(
+    (property) => property.id === slug
+  );
+}
+
+export function getRelatedProperties(
+  property: Property,
+  limit = 3
+): Property[] {
+  return availableProperties
+    .filter((item) => item.id !== property.id)
+    .sort((a, b) => {
+      const aScore =
+        Number(a.type === property.type) * 2 +
+        Number(a.locationSlug === property.locationSlug);
+
+      const bScore =
+        Number(b.type === property.type) * 2 +
+        Number(b.locationSlug === property.locationSlug);
+
+      return bScore - aScore;
+    })
+    .slice(0, limit);
+}
+
+const propertyTypeLabels: Record<Property["type"], string> = {
+  residential: "Bostadsfastighet",
+  commercial: "Kommersiell fastighet",
+  industrial: "Industrifastighet",
+  development: "Utvecklingsfastighet",
+};
+
+export function getPropertyTypeLabel(
+  type: Property["type"]
+): string {
+  return propertyTypeLabels[type];
 }
