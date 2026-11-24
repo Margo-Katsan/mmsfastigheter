@@ -1,10 +1,14 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MapPin } from "lucide-react";
+import {
+  ArrowUpRight,
+  MapPin,
+  Maximize,
+  Building2,
+} from "lucide-react";
 
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { PropertyImage } from "@/components/ui/PropertyImage";
+import { formatArea } from "@/lib/formatters";
 import { cn } from "@/lib/utils";
 import type { Property } from "@/types/property";
 
@@ -13,90 +17,126 @@ type PropertyCardProps = {
   className?: string;
 };
 
-function getBadgeVariant(status: Property["status"]) {
-  if (status === "Projekt") return "warning";
-  if (status === "Till salu / uthyrning") return "success";
-  return "default";
-}
-
 export function PropertyCard({
   property,
   className,
 }: PropertyCardProps) {
-  const {
-    title,
-    location,
-    status,
-    description,
-    image,
-    contactText,
-    ctaLabel = "Läs mer",
-    href = "#",
-    area,
-  } = property;
-
   return (
     <article
       className={cn(
-        "overflow-hidden rounded-card border border-border bg-surface shadow-card transition-shadow hover:shadow-elevated",
+        "group flex h-full flex-col overflow-hidden rounded-card",
+        "border border-border bg-surface shadow-card",
+        "transition-all duration-300",
+        "motion-safe:hover:-translate-y-1 hover:shadow-elevated",
         className
       )}
     >
-      <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="order-2 flex flex-col p-6 lg:order-1 lg:p-8">
-          <div className="mb-4 flex flex-wrap items-center gap-3">
-            <Badge variant={getBadgeVariant(status)}>{status}</Badge>
+      {/* Property image */}
+      <Link
+        href={property.href}
+        aria-label={`Visa ${property.title} i ${property.location}`}
+        className="relative block aspect-[4/3] overflow-hidden bg-background"
+      >
+        <PropertyImage
+          src={property.image}
+          alt={`${property.title} i ${property.location}`}
+          contain={property.status === "Projekt"}
+        />
 
-            <span className="inline-flex items-center gap-1 text-sm text-muted">
-              <MapPin size={16} strokeWidth={1.75} />
-              {location}
-            </span>
-          </div>
+        {/* Status */}
+        <div className="absolute top-4 left-4">
+          <Badge className="border border-white/30 bg-white/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-primary shadow-sm backdrop-blur-sm">
+            {property.status}
+          </Badge>
+        </div>
+      </Link>
 
-          <h3 className="text-2xl leading-tight text-foreground">
-            {title}
-          </h3>
-
-          {area && (
-            <p className="mt-2 text-sm font-medium text-primary">
-              {area}
-            </p>
-          )}
-
-          <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">
-            {description}
-          </p>
-
-          {contactText && (
-            <p className="mt-5 text-sm leading-relaxed text-foreground">
-              {contactText}
-            </p>
-          )}
-
-          <div className="mt-6">
-            <Link href={href}>
-              <Button>
-                {ctaLabel}
-                <ArrowRight size={18} aria-hidden="true" />
-              </Button>
-            </Link>
-          </div>
+      {/* Content */}
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        {/* Location */}
+        <div className="flex items-center gap-1.5 text-sm text-muted">
+          <MapPin
+            size={15}
+            strokeWidth={1.75}
+            aria-hidden="true"
+          />
+          <span>{property.location}</span>
         </div>
 
-        <div className="order-1 min-h-[260px] lg:order-2">
-          {image ? (
-            <div className="relative h-full min-h-[260px] w-full">
-              <Image
-                src={image}
-                alt={title}
-                fill
-                sizes="(max-width: 1023px) 100vw, 40vw"
-                className="object-cover"
+        {/* Title */}
+        <h3 className="mt-3 font-display text-2xl leading-tight text-foreground">
+          <Link
+            href={property.href}
+            className="transition-colors hover:text-primary"
+          >
+            {property.title}
+          </Link>
+        </h3>
+
+        {/* Property information */}
+        <div className="mt-4 flex flex-wrap items-center gap-4">
+          {property.area !== undefined && (
+            <div className="flex items-center gap-2 text-sm text-muted">
+              <Maximize
+                size={16}
+                strokeWidth={1.5}
+                aria-hidden="true"
               />
+
+              <span>{formatArea(property.area)}</span>
             </div>
-          ) : (
-            <ImagePlaceholder />
           )}
+
+          {property.apartments !== undefined && (
+            <div className="flex items-center gap-2 text-sm text-muted">
+              <Building2
+                size={16}
+                strokeWidth={1.5}
+                aria-hidden="true"
+              />
+
+              <span>
+                Ca {property.apartments} lägenheter
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Description */}
+        <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-muted">
+          {property.description}
+        </p>
+
+        {/* Footer */}
+        <div className="mt-auto pt-6">
+          <div className="flex items-center justify-between border-t border-border pt-5">
+            <div>
+              <p className="text-xs text-muted">
+                {property.status === "Projekt"
+                  ? "Projektinformation"
+                  : "Mer information"}
+              </p>
+
+              <Link
+                href={property.href}
+                className="mt-1 inline-block text-sm font-semibold text-primary hover:underline"
+              >
+                Läs mer
+              </Link>
+            </div>
+
+            <Link
+              href={property.href}
+              aria-label={`Läs mer om ${property.title} i ${property.location}`}
+              className="flex size-11 items-center justify-center rounded-full border border-border text-primary transition-colors group-hover:border-primary group-hover:bg-primary group-hover:text-white"
+            >
+              <ArrowUpRight
+                size={20}
+                strokeWidth={1.5}
+                aria-hidden="true"
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </article>

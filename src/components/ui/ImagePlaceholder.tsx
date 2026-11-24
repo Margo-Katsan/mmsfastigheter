@@ -1,27 +1,56 @@
-import { Building2, ImageOff } from "lucide-react";
+import { Building2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export function ImagePlaceholder() {
+type ImagePlaceholderProps = {
+  className?: string;
+};
+
+export function ImagePlaceholder({
+  className,
+}: ImagePlaceholderProps) {
   return (
-    <div className="flex h-full min-h-[260px] w-full flex-col items-center justify-center rounded-2xl bg-linear-to-br from-stone-100 to-stone-200 text-center">
-      <div className="flex size-16 items-center justify-center rounded-full bg-white/80 shadow-sm">
-        <Building2
-          size={28}
-          strokeWidth={1.5}
-          className="text-primary"
-        />
-      </div>
+    <div
+      className={cn(
+        "relative flex h-full w-full items-center justify-center overflow-hidden bg-primary/8",
+        className
+      )}
+    >
+      {/* Architectural grid */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, #193c2f 1px, transparent 1px),
+            linear-gradient(to bottom, #193c2f 1px, transparent 1px)
+          `,
+          backgroundSize: "24px 24px",
+        }}
+      />
 
-      <p className="mt-5 text-base font-semibold text-foreground">
-        Bild kommer snart
-      </p>
+      <div className="relative flex flex-col items-center px-4 py-8 text-center">
+        <div className="flex size-14 items-center justify-center rounded-full border border-primary/10 bg-primary/5">
+          <Building2
+            size={28}
+            strokeWidth={1.25}
+            className="text-primary"
+            aria-hidden="true"
+          />
+        </div>
 
-      <p className="mt-2 max-w-[220px] text-sm leading-relaxed text-muted">
-        Bild för denna fastighet är inte tillgänglig ännu.
-      </p>
+        <span className="mt-4 text-4xl font-bold leading-none tracking-[-0.07em] text-primary">
+          MMS
+        </span>
 
-      <div className="mt-4 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted">
-        <ImageOff size={14} strokeWidth={1.75} />
-        MMS Fastigheter
+        <span className="mt-1 text-[9px] font-medium tracking-[0.3em] text-primary">
+          FASTIGHETER
+        </span>
+
+        <span className="mt-4 h-px w-8 bg-accent" />
+
+        <p className="mt-3 text-xs text-muted">
+          Bild saknas
+        </p>
       </div>
     </div>
   );
