@@ -25,3 +25,16 @@ export type Property = {
   ctaLabel?: string;
   href: string;
 };
+
+export type PropertyFilters = {
+  location: string;
+  type: string;
+  area: string;
+  status: string;
+  sort: string;
+};
+
+export type PropertySearchParams = Record<
+  string,
+  string | string[] | undefined
+>;
