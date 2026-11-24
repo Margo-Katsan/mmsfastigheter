@@ -1,5 +1,7 @@
 "use server";
 
+import { protectForm } from "@/lib/security/protect-form";
+
 import { company } from "@/data/company";
 import { sendMail } from "@/lib/mail";
 
@@ -8,6 +10,7 @@ import {
   MAX_FILES,
   MAX_FILE_SIZE,
   ALLOWED_IMAGE_TYPES,
+  MAX_TOTAL_FILE_SIZE,
 } from "@/data/fault-report";
 
 import { faultReportSchema } from "@/lib/validations/fault-report";
@@ -93,6 +96,20 @@ export async function submitFaultReport(
 
   const data = validation.data;
 
+  const protection = await protectForm({
+  formData,
+  type: "fault-report",
+  email: data.email,
+});
+
+if (!protection.success) {
+  return {
+    status: "error",
+    message: protection.message,
+    values,
+  };
+}
+
   const files = formData
     .getAll("images")
     .filter(
@@ -110,6 +127,22 @@ export async function submitFaultReport(
       },
     };
   }
+
+  const totalSize = files.reduce(
+  (total, file) => total + file.size,
+  0
+);
+
+if (totalSize > MAX_TOTAL_FILE_SIZE) {
+  return {
+    status: "error",
+    message: "De bifogade bilderna är för stora.",
+    values,
+    errors: {
+      images: ["Den totala filstorleken får vara högst 3 MB."],
+    },
+  };
+}
 
   const attachments: {
     filename: string;

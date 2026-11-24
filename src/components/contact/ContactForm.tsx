@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
+import { TurnstileWidget } from "@/components/security/TurnstileWidget";
 import Link from "next/link";
 
 import {
@@ -49,6 +50,17 @@ export function ContactForm({
     submitContact,
     initialState
   );
+  const [turnstileToken, setTurnstileToken] = useState("");
+const [turnstileVersion, setTurnstileVersion] = useState(0);
+
+function handleSubmit(formData: FormData) {
+  formData.set("turnstileToken", turnstileToken);
+
+  setTurnstileToken("");
+  setTurnstileVersion((version) => version + 1);
+
+  formAction(formData);
+}
 
   if (state.status === "success") {
     return (
@@ -105,7 +117,7 @@ export function ContactForm({
         till dig så snart vi kan.
       </p>
 
-      <form action={formAction} className="mt-8">
+      <form action={handleSubmit} className="mt-8">
         <fieldset disabled={pending} className="space-y-6">
           {/* Honeypot */}
           <div className="hidden" aria-hidden="true">
@@ -241,14 +253,25 @@ export function ContactForm({
             </p>
           </div>
         )}
+        <div className="mt-6">
+  {!pending && (
+    <TurnstileWidget
+      key={turnstileVersion}
+      action="contact"
+      onVerify={setTurnstileToken}
+      onExpire={() => setTurnstileToken("")}
+      onError={() => setTurnstileToken("")}
+    />
+  )}
+</div>
 
         {/* Submit button */}
         <Button
-          type="submit"
-          size="lg"
-          disabled={pending}
-          className="mt-8 w-full"
-        >
+  type="submit"
+  size="lg"
+  disabled={pending || !turnstileToken}
+  className="mt-8 w-full"
+>
           {pending ? (
             <>
               <LoaderCircle

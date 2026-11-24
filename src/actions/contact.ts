@@ -1,5 +1,7 @@
 "use server";
 
+import { protectForm } from "@/lib/security/protect-form";
+
 import { contactSchema } from "@/lib/validations/contact";
 import { sendMail } from "@/lib/mail";
 import { properties } from "@/data/properties";
@@ -42,6 +44,20 @@ export async function submitContact(
   }
 
   const data = validation.data;
+
+  const protection = await protectForm({
+  formData,
+  type: "contact",
+  email: data.email,
+});
+
+if (!protection.success) {
+  return {
+    status: "error",
+    message: protection.message,
+    values,
+  };
+}
 
   const property = properties.find(
     (item) => item.id === data.object

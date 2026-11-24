@@ -1,6 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
+
+import { TurnstileWidget } from "@/components/security/TurnstileWidget";
 import Link from "next/link";
 
 import {
@@ -36,6 +38,7 @@ function FormSectionHeading({
   title: string;
   description: string;
 }) {
+  
   return (
     <div className="mb-7 flex items-start gap-4">
       <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-medium text-white">
@@ -60,6 +63,18 @@ export function FaultReportForm() {
     submitFaultReport,
     initialState
   );
+
+  const [turnstileToken, setTurnstileToken] = useState("");
+const [turnstileVersion, setTurnstileVersion] = useState(0);
+
+function handleSubmit(formData: FormData) {
+  formData.set("turnstileToken", turnstileToken);
+
+  setTurnstileToken("");
+  setTurnstileVersion((version) => version + 1);
+
+  formAction(formData);
+}
 
   const values = state.values;
   const errors = state.errors;
@@ -102,7 +117,7 @@ export function FaultReportForm() {
 
   return (
     <div className="rounded-card border border-border bg-surface p-6 shadow-card sm:p-8 lg:p-10">
-      <form action={formAction}>
+      <form action={handleSubmit}>
         <fieldset disabled={pending}>
           {/* Honeypot */}
           <div hidden aria-hidden="true">
@@ -314,12 +329,24 @@ export function FaultReportForm() {
           </div>
         )}
 
+        <div className="mt-6">
+  {!pending && (
+    <TurnstileWidget
+      key={turnstileVersion}
+      action="fault-report"
+      onVerify={setTurnstileToken}
+      onExpire={() => setTurnstileToken("")}
+      onError={() => setTurnstileToken("")}
+    />
+  )}
+</div>
+
         <Button
-          type="submit"
-          size="lg"
-          disabled={pending}
-          className="mt-8 w-full"
-        >
+  type="submit"
+  size="lg"
+  disabled={pending || !turnstileToken}
+  className="mt-8 w-full"
+>
           {pending ? (
             <>
               <LoaderCircle

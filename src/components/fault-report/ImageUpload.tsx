@@ -78,7 +78,7 @@ export function ImageUpload({
       }
 
       if (file.size > MAX_FILE_SIZE) {
-        setLocalError("Varje bild får vara högst 2 MB.");
+        setLocalError("Varje bild får vara högst 1 MB.");
         continue;
       }
 
@@ -150,8 +150,8 @@ export function ImageUpload({
         </span>
 
         <span className="mt-2 text-xs text-muted">
-          JPG, PNG eller WEBP. Max 2 MB per bild.
-        </span>
+  JPG, PNG eller WEBP. Max 1 MB per bild.
+</span>
       </button>
 
       {files.length > 0 && (
