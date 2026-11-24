@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
     qualities: [75, 85, 90, 95, 100],
     formats: ["image/avif", "image/webp"],
   },
+   experimental: {
+    serverActions: {
+      bodySizeLimit: "8mb",
+    },
+  },
   turbopack: {
     rules: {
       "*.css": {

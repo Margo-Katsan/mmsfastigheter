@@ -7,12 +7,18 @@ type SendMailOptions = {
   subject: string;
   text: string;
   replyTo?: string;
+  attachments?: {
+    filename: string;
+    content: Buffer;
+    contentType: string;
+  }[];
 };
 
 export async function sendMail({
   to,
   subject,
   text,
+  attachments,
   replyTo,
 }: SendMailOptions) {
   const {
@@ -62,6 +68,7 @@ export async function sendMail({
     to,
     replyTo,
     subject,
+    attachments,
     text,
   });
 
