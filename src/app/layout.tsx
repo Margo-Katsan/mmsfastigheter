@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Header } from "@/components/layout/Header";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
@@ -31,8 +32,10 @@ export default function RootLayout({
   return (
     <html lang="sv">
       <body
-        className={`${inter.variable} ${playfair.variable} antialiased`}
+        className={`${inter.variable} ${playfair.variable} flex min-h-screen flex-col antialiased`}
       >
+        <Header />
+
         {children}
       </body>
     </html>
