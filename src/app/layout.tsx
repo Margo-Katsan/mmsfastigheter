@@ -1,8 +1,24 @@
 import type { Metadata } from "next";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "MMS Fastigheter",
+  title: {
+    default: "MMS Fastigheter",
+    template: "%s | MMS Fastigheter",
+  },
   description:
     "Fastigheter, uthyrning och fastighetsutveckling i Skåne sedan 1984.",
 };
@@ -14,7 +30,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sv">
-      <body>{children}</body>
+      <body
+        className={`${inter.variable} ${playfair.variable} antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
